@@ -1,0 +1,8 @@
+
+
+a=~protoGui %= (
+	addCG:(background:Color.rand),
+	model:`0, msg:\value, gui:NumberBox
+) 
+
+a

@@ -1,0 +1,20 @@
+Attempt to do something that simplifies gui prototyping
+
+based on proxy style
+
+The "space" should be a window
+
+
+"Open a space"
+
+ProtoGui.open
+
+//
+
+Heres your values
+
+(Io:9, mama:"is groovy") etc.
+
+///
+
+
