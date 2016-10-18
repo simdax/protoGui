@@ -20,8 +20,8 @@
 				}.inEnvir(s))				
 				.mouseUpAction_{ arg msv;
 					s.val=s.range.asSpec.step_(s.round).map(s.msv.value);
-					[routine,s.stringRoutine].do(_.resume)
-					;}
+					[routine,s.stringRoutine].do(_.resume);
+					}
 			};
 			routine=Task({
 				var anc=s.range;
@@ -41,8 +41,7 @@
 				s.win=win.parent; 
 				s.parent_(s.objects(envir));
 				s.stringRoutine.play;
-				s.stringRoutine.postln;
-				s.postln
+				s
 			},
 			objects:{arg s,ss; (
 				button1:Button(s.win)
@@ -59,10 +58,10 @@
 			s.parent.putAll(
 				s.makeGui.init(t,s).parent,
 				(msv:MultiSliderView(t.parent,280@200).elasticMode_(true)));
-			s.go
+			s.go; 
+			s
 		}
 	)
 );
 )
 
-~msvPlus.gui
