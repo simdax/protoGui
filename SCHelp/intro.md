@@ -10,7 +10,7 @@ The "space" should be a window
 ProtoGui.open
 
 //
-
+scl 
 Heres your values
 
 (Io:9, mama:"is groovy") etc.

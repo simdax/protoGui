@@ -6,106 +6,64 @@ ProtoGui{
 	classvar <envir, <parent;
 	classvar <instances=0;
 	*push{
-		parent=FlowView().parent.alwaysOnTop_(true);
+		parent ?? {parent=FlowView(bounds:Rect(1000, 800, 400,400)).parent.alwaysOnTop_(true)};
 		envir.push
 	}
-	*new{ arg name;
-		if(name.isNil){name=(instances+97).asAscii.asSymbol; instances=instances+1};
+	*pop{
+		ProtoGui.envir.pop
+	}
+	*new{ 	arg name, par=parent;
+		if(name.isNil){name=(instances+97).asAscii.asSymbol;
+			instances=instances+1}; 
 		^(constructGui:
 			(
-				model:name,
-				envi:ProtoGui.envir,				
-				value:{arg s; s.use{
-					~envi.at(~model).value ? 0
-				}},
+				value:{arg s;  s.use{
+					(~envir.at(~model).value) ? ~initVal
+				}
+				},
 				action:{ arg s;
 					{arg self;
-						//var res=s[\valAction].postln.value(self.value);
-						s.postln;
-						//	~envi.put(~model,res)
-					}
+						var res=s[\valAction].value(self.value);
+						~envir.localPut(~model,self.value)
+					}.inEnvir(s)
 				}).parent_((
-					valAction:{	arg res; if(~spec.notNil){~spec.map(res)}{res} },
-					construct:{ arg s, ss;
+					initVal:0,
+					model:name.asSymbol,
+					envir:ProtoGui.envir,
+					valAction:{arg res; res},//{	arg res; if(~spec.notNil){~spec.map(res)}{res}; res },
+					construct:{ arg s, view;
 						s.keys.do { |x| 
-							ss.view.perform(x.asSetter,s[x].value(s))
+							view.perform(x.asSetter,s[x].value(s));
 						};
-						//~hook.value(view)
+						s[\hook].value(view)
 					})
 				),
-			gui:Slider,
-			go:{arg s, p=parent, b;
-				s.use{
-					s.view=~gui.new(p,b);
-					~constructGui.putAll(~addCG).construct(s);
-					// SimpleController(~model.value).put(\val,
-					// 	{ arg qui,que,quoi;
-					// 		~gui.value_(
-					// 			if(~spec.notNil)
-					// 			{~spec.unmap(quoi)}
-					// 			{quoi}
-					// 		)
-					// 	}	
-				};
-				s	
-			})
+		gui:Slider,
+		fen:par,
+		go:{arg s;
+			var gui;
+			s.use{
+				var f=~fen??{FlowView()};
+				gui=~gui.new(f,~bounds);
+				~constructGui.copy.putAll((~opt?()))
+				.proto_(s)
+				.construct(gui);
+			};
+			//z.put(name,s.view);
+			gui
+		});
 	}
 
 	*initClass{
-
 		envir=LazyEnvir();		
-
-		StartUp.add{
-
-			~protoGui=
-			(
-				constructGui:(
-					value:{arg s; s.postln; s.use{
-						~envi.postln;
-						~envi.at(~model.value)
-					}},
-					action:{ arg s;
-						{arg self; var res=self.value;
-							~envir.put(~model,
-								if(~spec.notNil){~spec.map(res)}{res})
-						}.inEnvir(s)
-					}).parent_((
-						construct:{ arg s, ss;
-							ss.use{
-								ss.postln;
-								s.keys.do { |x| x.postln;
-									~view.perform(
-										x.asSetter,s[x].value(ss))
-								}};
-							//~hook.value(view)
-						})
-					),
-				envi:ProtoGui.envir,
-				gui:Slider,
-				go:{arg s, p=FlowView(),b;
-					s.use{
-						s.postln;
-						s.view=~gui.new(p,b);
-						~constructGui.putAll(~addCG).construct(s);
-						SimpleController(~model.value).put(\val,
-							{ arg qui,que,quoi;
-								~gui.value_(
-									if(~spec.notNil)
-									{~spec.unmap(quoi)}
-									{quoi}
-								)
-							}
-						)
-					};
-					s
-				}
-			)
-
-		}
 	}
 }
 
 + Event{
+	// override to have more plasticity
+	localPut{arg key,val;
+		this.put(key,val)
+	}
 	%={arg dest;
 		^(dest.parent_(this))
 	}
