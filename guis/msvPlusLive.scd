@@ -4,7 +4,6 @@
 ).parent_(
 	(
 		val:[0,3,4],
-		msv:MultiSliderView().elasticMode_(true),
 		specs:(range:[0,10],round:\unipolar),
 		go:{arg s; var routine;
 			s.use
@@ -56,8 +55,10 @@
 			)},
 		),
 		gui:{arg s;
-			var t=MyEnvirGui(s,3); t.parent.bounds_(300@200);
-			s.parent.putAll(s.makeGui.init(t,s).parent);
+			var t=MyEnvirGui(s,3); t.parent.bounds_(300@350);
+			s.parent.putAll(
+				s.makeGui.init(t,s).parent,
+				(msv:MultiSliderView(t.parent,280@200).elasticMode_(true)));
 			s.go
 		}
 	)
