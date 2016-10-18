@@ -17,20 +17,28 @@ MSVPlus : View{
 		^msv.perform(op, *args)
 	}
 	init{
-		var specView=View()
+		var specView=View(); specView.addFlowLayout;
+		specView
+		.background_(Color.rand)
 		.minWidth_(this.bounds.width)
 		.minHeight_(20)
 		;
 		msv=MSV(); msv.addDependant(this);
-		msv.spec.gui(specView);
+		(
+			clip:[msv.spec.minval,msv.spec.maxval],
+			range:[msv.spec.minval,msv.spec.maxval]
+		)
+		.parent_((specs:(range:[0,6,nil,1])))
+		.gui(2,specView)
+		.addAction(\range, {arg s;msv.spec=s.value})
+		;
 
 		this.layout_(
 			VLayout(
 				View().layout_(
 					VLayout(
 						specView,
-						indicateur=StaticText()
-						.background_(Color.rand)
+						indicateur=StaticText().background_(Color.rand)
 					).margins_(0).spacing_(0),
 				).fixedHeight_(60)
 				, msv,
