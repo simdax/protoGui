@@ -4,7 +4,7 @@ a.action_{"io".postln}
 a.buttons
 */
 
-MSVPlus : View{
+MSVPlu : View{
 
 	var <msv, <buttons, <indicateur;
 	*new{ arg p=FlowView(), b;

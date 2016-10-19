@@ -1,6 +1,6 @@
 (
-~msvPlus=(
-	range:[0,5], round:1
+(
+range:[0,5], round:1
 ).parent_(
 	(
 		val:[0,3,4],
@@ -62,6 +62,6 @@
 			s
 		}
 	)
-);
+).copy;
 )
 
