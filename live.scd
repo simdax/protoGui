@@ -14,10 +14,6 @@ ProtoGui.envir.dispatch={ arg k,v;
 	//	if(name.isNil){name=(n+97).asAscii.asSymbol; n=n+1}; name.postln;
 	a=(constructGui:
 			(
-				value:{arg s;  s.use{
-					(~envir.at(~model).value) ? ~initVal
-				}
-				},
 				action:{ arg s;
 					{arg self;
 						var res=s[\valAction].value(self.value);
@@ -25,6 +21,9 @@ ProtoGui.envir.dispatch={ arg k,v;
 					}.inEnvir(s)
 				}).parent_((
 					initVal:0,
+					val:{arg s;  s.use{
+						(~envir.at(~model).value) ? ~initVal
+					}},
 					model:name.asSymbol,
 					envir:ProtoGui.envir,
 					valAction:{arg res; res},//{	arg res; if(~spec.notNil){~spec.map(res)}{res}; res },
@@ -32,6 +31,7 @@ ProtoGui.envir.dispatch={ arg k,v;
 						s.keys.do { |x| 
 							view.perform(x.asSetter,s[x].value(s));
 						};
+						view.value_(s.val);
 						s[\hook].value(view)
 					})
 				),
@@ -54,8 +54,12 @@ ProtoGui.envir.dispatch={ arg k,v;
 c= a%=(envir:y,model:\bob, gui:EZNumber, opt:(controlSpec:\unipolar.asSpec));
 c.go
 
-y=();
+y=(bob:76)
+c= a%=(envir:y,model:\bob, gui:EZNumber, opt:(controlSpec:[0,100].asSpec));
+c.go
 
+
+y=();
 
 r=FlowView(windowTitle:"iooooooo");
 b= a%=( envir:y, fen:r, bounds:100@100, model:\io,gui:MultiSliderView, initVal:[1,1,1],

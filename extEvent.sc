@@ -17,10 +17,6 @@ ProtoGui{
 			instances=instances+1}; 
 		^(constructGui:
 			(
-				value:{arg s;  s.use{
-					(~envir.at(~model).value) ? ~initVal
-				}
-				},
 				action:{ arg s;
 					{arg self;
 						var res=s[\valAction].value(self.value);
@@ -28,13 +24,17 @@ ProtoGui{
 					}.inEnvir(s)
 				}).parent_((
 					initVal:0,
+					val:{arg s;  s.use{
+						(~envir.at(~model).value) ? ~initVal
+					}},
 					model:name.asSymbol,
-					envir:ProtoGui.envir,
+					envir:ProtoGui.envir, //currentEnvironment
 					valAction:{arg res; res},//{	arg res; if(~spec.notNil){~spec.map(res)}{res}; res },
 					construct:{ arg s, view;
 						s.keys.do { |x| 
 							view.perform(x.asSetter,s[x].value(s));
 						};
+						view.value_(s.val);
 						s[\hook].value(view)
 					})
 				),
