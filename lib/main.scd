@@ -23,7 +23,7 @@
 				.new(f,~bounds);
 				cGui.putAll(
 					(~opt.value(s)?()),
-					s[\gui][\opt] ? ()
+					//	s[\gui][\opt] ? ()
 				)
 				.proto_(s)
 				.construct(s.view);

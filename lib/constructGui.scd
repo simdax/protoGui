@@ -3,7 +3,7 @@
 	(
 		action:{ arg s;
 			{
-				~envir.put(~model,~view.value.postln)
+				~envir.put(~model,~view.value)
 			}.inEnvir(s)
 		}).parent_((
 			construct:{ arg s, view;
