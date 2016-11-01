@@ -4,4 +4,7 @@
 			^this.value(*optionalsArgs)
 		},{^this});
 	}
+	?/?{ arg rescue;
+		^try{this.value}{rescue.value}
+	}
 }

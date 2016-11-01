@@ -1,9 +1,12 @@
 {
 	(
-		check:{arg s,val;
- 			(s[val.class.asSymbol].(val) ?? {
-				s[\default].(val)
-			}).asSpec
+		check:{arg s,val,model;
+			model.asSymbol.asSpec ??
+			{
+				(s[val.class.asSymbol].(val) ?? {
+					s[\default].(val)
+				}).asSpec
+			}
 		},
 	).parent_((
 		Array:{arg val;

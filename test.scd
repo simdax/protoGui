@@ -23,15 +23,14 @@ c.go
 c= a%=(model:\bob, gui:EZNumber);
 c.go
 
-~bob=1
+~bob=33
 c= a%=(model:\bob);
 c.go
 
 // test with class call
 
 ~bob=2;
-ProtoG(
-	\bob)
+ProtoG(\bob, ())
 
 ~bob=[2];
 ProtoG(\bob)
