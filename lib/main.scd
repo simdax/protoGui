@@ -21,7 +21,7 @@
 				.proto_(s)
 				.construct(s.view);
 			};
-			s.gui
+			s
 		}
 	) %= ProtoG.defaultGui(model)
 

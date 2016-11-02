@@ -10,16 +10,16 @@ ProtoG : APP {
 
 		var envir=currentEnvironment;
 		var fen=(envir[\win].value ?? {FlowView()});
-
+		var res;
 		models.pairsDo
 		{|k,v|
 			all.putAddSet(
 				({envir.name}?/?(envir.hash.asSymbol)),k
 			);
-			(this.main(k,fen,envir)%=(v?())).go
+			res=(this.main(k,fen,envir)%=(v?())).go
 		};
 		
-		^super.new
+		^res
 	}
 	// type_{ arg name,f;
 	// 	type=f;

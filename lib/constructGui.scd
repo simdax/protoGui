@@ -13,10 +13,11 @@
 				).postln},
 			construct:{ arg s, view;
 				s.keys.do { |x|
-					if(view.class==Event){
-						view.win
-					}{view}
-					.perform(x.asSetter,s[x].value(s));
+					// TODO : design trick...
+					// if(view.parent!==GUIS.parent){
+					// 	view.win
+					// }{view}
+					view.perform(x.asSetter,s[x].value(s));
 				};
 				view.value_(s.initVal);
 				view.doAction; //if envir is empty
