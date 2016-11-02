@@ -27,6 +27,7 @@ c.go
 c= a%=(model:\bob);
 c.go
 
+
 // test with class call
 
 ~bob=2;

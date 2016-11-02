@@ -1,3 +1,8 @@
++Environment{
+	localPut{arg key,val;
+		this.put(key,val)
+	}
+}
 + Event{
 	// override to have more plasticity
 	localPut{arg key,val;

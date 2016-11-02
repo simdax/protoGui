@@ -13,10 +13,8 @@ ProtoG : APP {
 
 		models.pairsDo
 		{|k,v|
-			"on put add set".postln;
-			envir.postln;
 			all.putAddSet(
-				({envir.name}?/?(envir.hash.asSymbol)).postln,k.postln
+				({envir.name}?/?(envir.hash.asSymbol)),k
 			);
 			(this.main(k,fen,envir)%=(v?())).go
 		};

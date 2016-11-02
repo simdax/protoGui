@@ -2,12 +2,6 @@
 	arg model, parent=FlowView(), envir=currentEnvironment;
 	var cGui=ProtoG.constructGui;
 	(
-		hook:{arg s,view;
-			("'"++s.model.asString
-				++"' constructed as "++view.class
-				++" with specs : "++try{view.controlSpec}
-			).postln},
-
 		model:model.asSymbol,
 		envir:envir,
 		fen:parent,
@@ -23,14 +17,13 @@
 				.new(f,~bounds);
 				cGui.putAll(
 					(~opt.value(s)?()),
-					//	s[\gui][\opt] ? ()
 				)
 				.proto_(s)
 				.construct(s.view);
 			};
 			s.gui
 		}
-	) %= ProtoG.defaultGui
+	) %= ProtoG.defaultGui(model)
 
 }
 
